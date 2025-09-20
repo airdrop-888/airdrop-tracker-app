@@ -45,7 +45,7 @@ Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah ber
 
 1.  **Clone repositori ini:**
     ```bash
-    git clone https://github.com/USERNAME/airdrop-tracker-app.git
+    git clone https://github.com/airdrop-888/airdrop-tracker-app.git
     cd airdrop-tracker-app
     ```
 
