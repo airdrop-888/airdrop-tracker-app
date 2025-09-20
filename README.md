@@ -78,8 +78,6 @@ Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah ber
 | :---: | :---: |
 | ![Tampilan Login](./screenshot-login.png) | ![Dasbor Mobile](./screenshot-mobile.png) |
 
-*(Tips: Ganti screenshot di atas dengan gambar proyek Anda sendiri untuk tampilan yang lebih baik)*
-
 ---
 
 Terima kasih telah melihat proyek ini!
