@@ -4,7 +4,7 @@
 
 **Airdrop Tracker Management** adalah aplikasi web full-stack yang dirancang untuk membantu para penggemar cryptocurrency melacak, mengelola, dan memaksimalkan partisipasi mereka dalam berbagai event airdrop. Dibangun dengan tumpukan teknologi modern, aplikasi ini menawarkan antarmuka yang bersih, responsif, dan kaya fitur untuk memastikan tidak ada peluang airdrop yang terlewatkan.
 
-**Lihat demonya secara langsung:** [airdrop-tracker-app.vercel.app](https://airdrop-tracker-app.vercel.app/)
+**Lihat demonya secara langsung:** [Airdrop Tracker Management](https://airdrop-tracker-app.vercel.app/)
 
 ---
 
@@ -45,7 +45,7 @@ Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah ber
 
 1.  **Clone repositori ini:**
     ```bash
-    git clone https://github.com/USERNAME/airdrop-tracker-app.git
+    git clone https://github.com/airdrop-888/airdrop-tracker-app.git
     cd airdrop-tracker-app
     ```
 
