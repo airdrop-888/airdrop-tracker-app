@@ -1,26 +1,40 @@
+// src/pages/Dashboard.jsx
+
 import React, { useState, useEffect, useMemo } from 'react';
-import { supabase } from '../api/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { supabase } from '../api/supabaseClient';
+
+// Import Components
 import Header from '../components/layout/Header';
 import AirdropList from '../components/dashboard/AirdropList';
 import Modal from '../components/common/Modal';
 import AirdropForm from '../components/dashboard/AirdropForm';
 import { FiSearch } from 'react-icons/fi';
 
+// --- Styled Components ---
+
+// Ini adalah container utama untuk seluruh halaman.
+// Kuncinya ada di `height: 100vh;` yang memerintahkannya untuk mengisi 100% tinggi layar.
+// `display: flex` dan `flex-direction: column` menata Header dan MainContent secara vertikal.
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
+  background-color: var(--bg-primary); /* Pastikan background konsisten */
 `;
 
+// Ini adalah container untuk konten utama (di bawah Header).
+// `flex: 1;` adalah perintah agar ia mengisi semua sisa ruang vertikal di dalam PageWrapper.
+// `overflow-y: auto;` memastikan HANYA area ini yang akan scroll jika kontennya panjang.
 const MainContent = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding: 2rem 4rem;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
+  padding: 2rem 4rem;
 
   @media (max-width: 768px) {
     padding: 1.5rem;
@@ -126,6 +140,8 @@ const LoadingContainer = styled.div`
   color: var(--text-secondary);
 `;
 
+// --- Komponen Utama Dashboard ---
+
 const Dashboard = () => {
   const [airdrops, setAirdrops] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -229,6 +245,7 @@ const Dashboard = () => {
   return (
     <PageWrapper>
       <Header user={user} onLogout={handleLogout} />
+      
       {loading ? (
         <LoadingContainer>Memuat Dasbor...</LoadingContainer>
       ) : (
@@ -255,7 +272,7 @@ const Dashboard = () => {
                   onClick={() => setFilterStatus(status)}
                 >
                   {status}
-                </FilterButton>
+                </Button>
               ))}
             </FilterButtonGroup>
           </ControlsWrapper>
@@ -267,6 +284,7 @@ const Dashboard = () => {
           />
         </MainContent>
       )}
+
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AirdropForm
           onSuccess={handleSuccess}
