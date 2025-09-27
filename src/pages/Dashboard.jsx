@@ -20,7 +20,7 @@ import { FiSearch } from 'react-icons/fi';
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-color: var(--bg-primary); /* Pastikan background konsisten */
 `;

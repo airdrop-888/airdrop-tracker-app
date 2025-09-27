@@ -1,39 +1,21 @@
-/* src/index.css (SUDAH DIPERBAIKI) */
+/* src/index.css (VERSI FINAL PALING KUAT) */
 
-/* 
-  ==========================================================================
-   1. Universal Box Sizing & Basic Reset (INI SUDAH BENAR)
-  ==========================================================================
-*/
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-
-/* 
-  ==========================================================================
-   2. Full Viewport Foundation (BAGIAN INI DIPERBAIKI)
-  ==========================================================================
-*/
-
 /*
-  - Kita MENGHAPUS 'height: 100%' dari sini untuk menghilangkan konflik
-    dengan 'height: 100vh' yang ada di PageWrapper.
-  - PageWrapper sekarang menjadi satu-satunya sumber kebenaran untuk tinggi halaman.
+  - Memaksa setiap lapisan utama untuk setidaknya setinggi parent-nya.
+  - Ini akan menjadi fondasi yang kuat untuk `min-height: 100vh` di PageWrapper.
 */
 html, body, #root {
   width: 100%;
+  min-height: 100%; /* <-- KITA TAMBAHKAN KEMBALI SEBAGAI min-height */
   overflow-x: hidden;
 }
 
-
-/* 
-  ==========================================================================
-   3. Body Element Defaults (INI SUDAH BENAR)
-  ==========================================================================
-*/
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
