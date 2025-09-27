@@ -1,0 +1,75 @@
+/* src/index.css */
+
+/* 
+  ==========================================================================
+   1. Universal Box Sizing & Basic Reset
+  ==========================================================================
+*/
+
+/* 
+  - Mengubah cara browser menghitung lebar dan tinggi elemen.
+  - `border-box` berarti padding dan border akan dimasukkan ke dalam
+    total lebar/tinggi, bukan ditambahkan di luarnya. Ini membuat
+    manajemen layout menjadi jauh lebih mudah dan intuitif.
+  - Menghapus semua margin dan padding default yang diberikan browser
+    ke elemen seperti <h1>, <p>, <body>, dll. Ini memberikan
+    kontrol penuh atas spacing di aplikasi Anda.
+*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* 
+  ==========================================================================
+   2. Full Viewport Height & Width Foundation (INI BAGIAN UTAMA PERBAIKAN)
+  ==========================================================================
+*/
+
+/*
+  - Ini adalah aturan paling krusial untuk memperbaiki masalah scroll Anda.
+  - Dengan mengatur `height: 100%` pada `html`, `body`, dan `#root` (div utama
+    aplikasi React Anda), kita menciptakan sebuah "rantai" kontainer yang
+    semuanya mengisi tinggi penuh dari jendela browser.
+  - Tanpa ini, `height: 100%` pada komponen `PageWrapper` di dalam React
+    tidak akan memiliki parent yang tingginya terdefinisi, sehingga tidak
+    akan berfungsi seperti yang diharapkan.
+  - `overflow-x: hidden;` adalah tambahan yang bagus untuk mencegah munculnya
+    scrollbar horizontal yang tidak disengaja.
+*/
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* 
+  ==========================================================================
+   3. Body Element Defaults
+  ==========================================================================
+*/
+
+/*
+  - Menetapkan style dasar untuk seluruh halaman.
+  - `font-family`: Menentukan font default untuk semua teks. 'Inter' adalah
+    font yang bagus untuk UI, diikuti oleh font-font cadangan (fallback)
+    standar jika Inter tidak tersedia.
+  - `-webkit-font-smoothing` dan `-moz-osx-font-smoothing`: Membuat rendering
+    teks terlihat lebih halus dan lebih mudah dibaca di browser yang
+    mendukungnya (seperti Chrome, Safari, dan Firefox).
+  - Anda juga bisa menambahkan variabel CSS untuk warna background atau
+    teks utama di sini jika Anda tidak mengaturnya di file lain.
+    Contoh:
+    background-color: #f8f9fa;
+    color: #212529;
+*/
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
