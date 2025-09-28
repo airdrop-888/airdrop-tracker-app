@@ -14,22 +14,20 @@ import { FiSearch } from 'react-icons/fi';
 
 // --- Styled Components ---
 
-// Ini adalah container utama untuk seluruh halaman.
-// Kuncinya ada di `height: 100vh;` yang memerintahkannya untuk mengisi 100% tinggi layar.
-// `display: flex` dan `flex-direction: column` menata Header dan MainContent secara vertikal.
+// [PERUBAHAN 1] Menghapus 'display: flex' dan 'flex-direction: column'.
+// Ini adalah perubahan kunci. Dengan menghapusnya, PageWrapper tidak lagi membatasi
+// tinggi kontennya. Halaman akan memanjang ke bawah secara alami jika kontennya
+// banyak, dan scrollbar utama browser akan muncul.
 const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  background-color: var(--bg-primary); /* Pastikan background konsisten */
+  background-color: var(--bg-primary);
 `;
 
-// Ini adalah container untuk konten utama (di bawah Header).
-// `flex: 1;` adalah perintah agar ia mengisi semua sisa ruang vertikal di dalam PageWrapper.
-// `overflow-y: auto;` memastikan HANYA area ini yang akan scroll jika kontennya panjang.
+// [PERUBAHAN 2] Menghapus 'flex: 1'.
+// Properti ini hanya berfungsi jika parent-nya (PageWrapper) adalah flex container.
+// Karena kita sudah mengubah PageWrapper, properti ini tidak lagi diperlukan.
 const MainContent = styled.main`
-  flex: 1;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -130,11 +128,14 @@ const FilterButton = styled.button`
   }
 `;
 
+// [PERUBAHAN 3] Menghapus 'flex: 1' dan menambahkan 'padding'.
+// 'flex: 1' dihapus karena alasan yang sama dengan MainContent.
+// Padding ditambahkan agar tulisan "Memuat Dasbor..." tidak menempel di bawah header.
 const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  padding: 5rem 0; /* Memberi jarak vertikal saat loading */
   font-size: 1.5rem;
   color: var(--text-secondary);
 `;
