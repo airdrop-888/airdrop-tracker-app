@@ -30,7 +30,6 @@ const PageWrapper = styled.div`
 // `overflow-y: auto;` memastikan HANYA area ini yang akan scroll jika kontennya panjang.
 const MainContent = styled.main`
   flex: 1;
-  overflow-y: auto;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
