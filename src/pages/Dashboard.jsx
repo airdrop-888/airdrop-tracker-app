@@ -14,19 +14,16 @@ import { FiSearch } from 'react-icons/fi';
 
 // --- Styled Components ---
 
-// [PERUBAHAN 1] Menghapus 'display: flex' dan 'flex-direction: column'.
-// Ini adalah perubahan kunci. Dengan menghapusnya, PageWrapper tidak lagi membatasi
-// tinggi kontennya. Halaman akan memanjang ke bawah secara alami jika kontennya
-// banyak, dan scrollbar utama browser akan muncul.
+// [KODE FINAL] PageWrapper tidak lagi menjadi flex container.
+// Ia hanya bertugas sebagai pembungkus dengan tinggi minimal satu layar.
 const PageWrapper = styled.div`
   min-height: 100vh;
   width: 100%;
   background-color: var(--bg-primary);
 `;
 
-// [PERUBAHAN 2] Menghapus 'flex: 1'.
-// Properti ini hanya berfungsi jika parent-nya (PageWrapper) adalah flex container.
-// Karena kita sudah mengubah PageWrapper, properti ini tidak lagi diperlukan.
+// [KODE FINAL] MainContent juga tidak lagi memerlukan 'flex: 1'.
+// Ia akan mendorong PageWrapper untuk memanjang ke bawah sesuai kebutuhannya.
 const MainContent = styled.main`
   width: 100%;
   max-width: 1200px;
@@ -128,14 +125,11 @@ const FilterButton = styled.button`
   }
 `;
 
-// [PERUBAHAN 3] Menghapus 'flex: 1' dan menambahkan 'padding'.
-// 'flex: 1' dihapus karena alasan yang sama dengan MainContent.
-// Padding ditambahkan agar tulisan "Memuat Dasbor..." tidak menempel di bawah header.
 const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5rem 0; /* Memberi jarak vertikal saat loading */
+  padding: 5rem 0; /* Memberi jarak agar tidak menempel di header */
   font-size: 1.5rem;
   color: var(--text-secondary);
 `;

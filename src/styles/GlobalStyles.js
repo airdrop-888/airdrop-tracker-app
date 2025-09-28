@@ -1,3 +1,5 @@
+// src/styles/GlobalStyles.js
+
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -28,8 +30,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   /* --- PERUBAHAN PENTING UNTUK MENGATASI MASALAH SCROLL --- */
+  /* Menggunakan min-height memungkinkan halaman untuk tumbuh lebih tinggi dari layar, 
+     yang akan memicu scrollbar utama browser. */
   html, body, #root {
-    height: 100%; /* Memastikan semua elemen pembungkus utama mengisi tinggi layar */
+    min-height: 100%;
+    width: 100%;
   }
   /* -------------------------------------------------------- */
 
@@ -40,13 +45,11 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
   }
 
   /* --- PERUBAHAN PENTING UNTUK LAYOUT UTAMA --- */
-  #root {
-    display: flex;
-    flex-direction: column; /* Mengatur layout vertikal (Header di atas, Konten di bawah) */
-  }
+  /* Aturan flex pada #root ini DIHAPUS karena inilah penyebab utama scroll abnormal. */
   /* ------------------------------------------- */
   
   a { 
