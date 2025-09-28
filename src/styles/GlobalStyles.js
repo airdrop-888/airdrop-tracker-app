@@ -2,7 +2,7 @@
 
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalstyle`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
   :root {
@@ -29,14 +29,13 @@ const GlobalStyles = createGlobalStyle`
     padding: 0; 
   }
 
-  /* --- PERUBAHAN PENTING UNTUK MENGATASI MASALAH SCROLL --- */
-  /* Menggunakan min-height memungkinkan halaman untuk tumbuh lebih tinggi dari layar, 
-     yang akan memicu scrollbar utama browser. */
+  /* --- PERBAIKAN FINAL --- */
+  /* 'min-height' adalah kunci. Ini memastikan halaman minimal setinggi layar,
+     TAPI diizinkan untuk tumbuh lebih tinggi, sehingga memicu scrollbar utama browser. */
   html, body, #root {
-    min-height: 100%;
     width: 100%;
+    min-height: 100%;
   }
-  /* -------------------------------------------------------- */
 
   body {
     background-color: var(--bg-primary);
@@ -45,12 +44,13 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak perlu */
   }
 
-  /* --- PERUBAHAN PENTING UNTUK LAYOUT UTAMA --- */
-  /* Aturan flex pada #root ini DIHAPUS karena inilah penyebab utama scroll abnormal. */
-  /* ------------------------------------------- */
+  /* --- PERBAIKAN FINAL --- */
+  /* Aturan 'display: flex' pada #root DIHAPUS TOTAL. 
+     Ini adalah sumber utama masalah scroll abnormal Anda. */
+  /* ----------------------- */
   
   a { 
     color: var(--accent-primary); 
@@ -64,7 +64,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   button {
-    font-family: 'Inter', sans-serif; /* Memastikan font di tombol konsisten */
+    font-family: 'Inter', sans-serif;
   }
 `;
 
