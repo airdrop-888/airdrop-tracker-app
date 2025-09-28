@@ -15,15 +15,17 @@ import { FiSearch } from 'react-icons/fi';
 // --- Styled Components ---
 
 // [KODE FINAL] PageWrapper tidak lagi menjadi flex container.
-// Ia hanya bertugas sebagai pembungkus dengan tinggi minimal satu layar.
+// Ia hanya bertugas sebagai pembungkus dengan tinggi minimal satu layar,
+// memungkinkan halaman untuk memanjang ke bawah.
 const PageWrapper = styled.div`
   min-height: 100vh;
   width: 100%;
   background-color: var(--bg-primary);
 `;
 
-// [KODE FINAL] MainContent juga tidak lagi memerlukan 'flex: 1'.
-// Ia akan mendorong PageWrapper untuk memanjang ke bawah sesuai kebutuhannya.
+// [KODE FINAL] MainContent tidak lagi memerlukan 'flex: 1' atau 'overflow-y: auto'.
+// Dengan menghapus properti tersebut, ia tidak akan lagi membuat scrollbar internal.
+// Tingginya akan menyesuaikan secara otomatis dengan konten di dalamnya.
 const MainContent = styled.main`
   width: 100%;
   max-width: 1200px;
