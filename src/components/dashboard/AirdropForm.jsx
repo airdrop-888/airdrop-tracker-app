@@ -214,10 +214,37 @@ const TagInputField = styled.input`
   min-width: 120px;
 `;
 
+// [BARU] Styling untuk grup checkbox prioritas agar konsisten
+const CheckboxGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid transparent; /* Menjaga layout */
+`;
+
+// [BARU] Label untuk checkbox
+const CheckboxLabel = styled.label`
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+`;
+
+// [BARU] Input untuk checkbox
+const CheckboxInput = styled.input`
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+`;
+
 const AirdropForm = ({ onSuccess, onClose, initialData }) => {
   const [projectName, setProjectName] = useState('');
   const [description, setDescription] = useState('');
-  const [projectUrl, setProjectUrl] = useState(''); // State untuk URL
+  const [projectUrl, setProjectUrl] = useState('');
   const [status, setStatus] = useState('Potensial');
   const [priority, setPriority] = useState('Sedang');
   const [tags, setTags] = useState([]);
@@ -225,6 +252,7 @@ const AirdropForm = ({ onSuccess, onClose, initialData }) => {
   const [walletAddress, setWalletAddress] = useState('');
   const [potentialValue, setPotentialValue] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [isDaily, setIsDaily] = useState(false); // [BARU] State untuk checkbox prioritas harian
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -232,23 +260,25 @@ const AirdropForm = ({ onSuccess, onClose, initialData }) => {
     if (initialData) {
       setProjectName(initialData.project_name || '');
       setDescription(initialData.description || '');
-      setProjectUrl(initialData.project_url || ''); // Mengisi state URL
+      setProjectUrl(initialData.project_url || '');
       setStatus(initialData.status || 'Potensial');
       setPriority(initialData.priority || 'Sedang');
       setTags(initialData.tags || []);
       setWalletAddress(initialData.wallet_address || '');
       setPotentialValue(initialData.potential_value || '');
       setTasks(initialData.tasks || []);
+      setIsDaily(initialData.is_daily || false); // [BARU] Mengisi state 'is_daily' saat edit
     } else {
       setProjectName('');
       setDescription('');
-      setProjectUrl(''); // Mereset state URL
+      setProjectUrl('');
       setStatus('Potensial');
       setPriority('Sedang');
       setTags([]);
       setWalletAddress('');
       setPotentialValue('');
       setTasks([]);
+      setIsDaily(false); // [BARU] Mereset state 'is_daily' saat membuat baru
     }
   }, [initialData]);
 
@@ -274,13 +304,14 @@ const AirdropForm = ({ onSuccess, onClose, initialData }) => {
     const payload = {
       project_name: projectName,
       description,
-      project_url: projectUrl, // Menambahkan URL ke payload
+      project_url: projectUrl,
       status,
       priority,
       tags,
       wallet_address: walletAddress,
       potential_value: potentialValue || null,
       tasks,
+      is_daily: isDaily, // [BARU] Menambahkan 'is_daily' ke payload yang akan disimpan
       user_id: user.id
     };
 
@@ -311,7 +342,6 @@ const AirdropForm = ({ onSuccess, onClose, initialData }) => {
           <Input id="projectName" type="text" placeholder="Contoh: ZetaChain" value={projectName} onChange={(e) => setProjectName(e.target.value)} required />
         </FormGroup>
 
-        {/* --- INPUT BARU UNTUK URL --- */}
         <FormGroup>
           <Label htmlFor="projectUrl">Link URL Proyek</Label>
           <Input id="projectUrl" type="url" placeholder="https://www.zetachain.com/" value={projectUrl} onChange={(e) => setProjectUrl(e.target.value)} />
@@ -341,6 +371,19 @@ const AirdropForm = ({ onSuccess, onClose, initialData }) => {
             </Select>
           </FormGroup>
         </div>
+
+        {/* [BARU] Elemen checkbox untuk menandai Prioritas Harian */}
+        <CheckboxGroup>
+          <CheckboxInput
+            id="isDaily"
+            type="checkbox"
+            checked={isDaily}
+            onChange={(e) => setIsDaily(e.target.checked)}
+          />
+          <CheckboxLabel htmlFor="isDaily">
+            Tandai sebagai Prioritas Harian (Daily Task)
+          </CheckboxLabel>
+        </CheckboxGroup>
 
         <FormGroup>
           <Label htmlFor="tags">Tags (pisahkan dengan koma atau Enter)</Label>

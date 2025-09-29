@@ -10,7 +10,7 @@ import Header from '../components/layout/Header';
 import AirdropList from '../components/dashboard/AirdropList';
 import Modal from '../components/common/Modal';
 import AirdropForm from '../components/dashboard/AirdropForm';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiStar } from 'react-icons/fi';
 
 // --- Styled Components ---
 
@@ -119,6 +119,19 @@ const FilterButton = styled.button`
     border-color: ${({ active }) => (active ? 'var(--accent-hover)' : 'var(--text-secondary)')};
     background-color: ${({ active }) => (active ? 'var(--accent-hover)' : '#f8f9fa')};
   }
+
+  &.daily-priority {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: ${({ active }) => (active ? '#f59e0b' : 'var(--bg-secondary)')};
+    border-color: ${({ active }) => (active ? '#f59e0b' : 'var(--border-color)')};
+
+    &:hover:not(:disabled) {
+      background-color: ${({ active }) => (active ? '#d97706' : '#f8f9fa')};
+      border-color: ${({ active }) => (active ? '#d97706' : 'var(--text-secondary)')};
+    }
+  }
 `;
 
 const LoadingContainer = styled.div`
@@ -140,7 +153,19 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [editingAirdrop, setEditingAirdrop] = useState(null);
+  const [showOnlyDaily, setShowOnlyDaily] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isModalOpen]);
 
   const fetchAirdrops = async (userId) => {
     const { data, error } = await supabase
@@ -226,11 +251,13 @@ const Dashboard = () => {
     if (!Array.isArray(airdrops)) return [];
 
     return airdrops
-      .filter((a) => filterStatus === 'All' || a.status === filterStatus)
+      .sort((a, b) => Number(b.is_daily) - Number(a.is_daily)) 
+      .filter((a) => !showOnlyDaily || a.is_daily) 
+      .filter((a) => filterStatus === 'All' || a.status === filterStatus) 
       .filter((a) =>
         a.project_name && a.project_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-  }, [airdrops, filterStatus, searchTerm]);
+  }, [airdrops, filterStatus, searchTerm, showOnlyDaily]);
 
   return (
     <PageWrapper>
@@ -255,6 +282,15 @@ const Dashboard = () => {
               />
             </SearchInputContainer>
             <FilterButtonGroup>
+              <FilterButton
+                className="daily-priority"
+                active={showOnlyDaily}
+                onClick={() => setShowOnlyDaily(!showOnlyDaily)}
+              >
+                <FiStar size={16} />
+                Prioritas Daily
+              </FilterButton>
+
               {['All', 'Potensial', 'Aktif', 'Terklaim', 'Selesai'].map((status) => (
                 <FilterButton
                   key={status}
@@ -262,7 +298,7 @@ const Dashboard = () => {
                   onClick={() => setFilterStatus(status)}
                 >
                   {status}
-                </FilterButton> 
+                </FilterButton>
               ))}
             </FilterButtonGroup>
           </ControlsWrapper>
