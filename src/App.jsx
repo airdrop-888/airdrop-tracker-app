@@ -1,3 +1,5 @@
+// src/App.jsx
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
@@ -11,11 +13,9 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import UpdatePassword from './pages/UpdatePassword';
 
-// --- Kode Baru ---
-// 1. Import komponen ProtectedRoute yang telah kita buat.
-// Pastikan path ini sesuai dengan lokasi file yang Anda buat di Langkah 1.
+// Import komponen ProtectedRoute.
+// Path ini harus sesuai dengan lokasi file Anda.
 import ProtectedRoute from './components/auth/ProtectedRoute';
-// --- Akhir Kode Baru ---
 
 
 function App() {
@@ -31,7 +31,10 @@ function App() {
         <Routes>
 
           {/* === RUTE PUBLIK === */}
-          {/* Rute-rute ini dapat diakses oleh siapa saja, baik yang sudah login maupun yang belum. */}
+          {/* Rute-rute ini dapat diakses oleh siapa saja. */}
+          {/* Definisi rute untuk /update-password di bawah ini sudah benar. */}
+          {/* React Router akan merender komponen UpdatePassword jika URL-nya cocok, */}
+          {/* SETELAH server berhasil menyajikan file index.html. */}
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -41,22 +44,16 @@ function App() {
 
           {/* === RUTE TERPROTEKSI === */}
           {/* Rute di dalam wrapper ini hanya bisa diakses jika pengguna sudah login. */}
-          {/* Komponen `ProtectedRoute` akan memeriksa status otentikasi terlebih dahulu. */}
           <Route element={<ProtectedRoute />}>
-            {/* Jika pengguna sudah login, <Outlet /> di dalam ProtectedRoute akan merender rute ini. */}
-            {/* Jika tidak, pengguna akan otomatis dialihkan ke halaman "/login" oleh ProtectedRoute. */}
             <Route path="/dashboard" element={<Dashboard />} />
-            
-            {/* Anda bisa menambahkan rute terproteksi lainnya di sini di masa depan */}
-            {/* Contoh: <Route path="/profil" element={<HalamanProfil />} /> */}
+            {/* Anda bisa menambahkan rute terproteksi lainnya di sini */}
           </Route>
           
 
           {/* === RUTE UTAMA & FALLBACK === */}
 
-          {/* Rute untuk halaman utama ('/'). */}
-          {/* Ini akan selalu mengarahkan ke /dashboard. Karena /dashboard sekarang dilindungi, */}
-          {/* logika pengalihan ke /login akan ditangani secara otomatis oleh ProtectedRoute. */}
+          {/* Rute untuk halaman utama ('/') akan selalu mengarahkan ke /dashboard. */}
+          {/* Logika pengalihan ke /login akan ditangani oleh ProtectedRoute. */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
           {/* Rute fallback jika tidak ada rute lain yang cocok (Halaman 404) */}
