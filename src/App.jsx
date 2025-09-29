@@ -8,40 +8,65 @@ import GlobalStyles from './styles/GlobalStyles';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ForgotPassword from './pages/ForgotPassword'; // Import halaman baru
-import UpdatePassword from './pages/UpdatePassword'; // Import halaman baru
+import ForgotPassword from './pages/ForgotPassword';
+import UpdatePassword from './pages/UpdatePassword';
+
+// --- Kode Baru ---
+// 1. Import komponen ProtectedRoute yang telah kita buat.
+// Pastikan path ini sesuai dengan lokasi file yang Anda buat di Langkah 1.
+import ProtectedRoute from './components/auth/ProtectedRoute';
+// --- Akhir Kode Baru ---
+
 
 function App() {
   // Komponen App sekarang berfungsi sebagai pusat kontrol routing
   return (
     <>
-      {/* 1. Menerapkan style global ke seluruh komponen di bawahnya */}
+      {/* Menerapkan style global ke seluruh komponen di bawahnya */}
       <GlobalStyles />
 
-      {/* 2. Membungkus seluruh aplikasi dengan BrowserRouter untuk mengaktifkan routing */}
+      {/* Membungkus seluruh aplikasi dengan BrowserRouter untuk mengaktifkan routing */}
       <BrowserRouter>
-        {/* 3. Container untuk semua definisi rute */}
+        {/* Container untuk semua definisi rute */}
         <Routes>
-          {/* Rute untuk halaman utama ('/'). 
-              Kita menggunakan <Navigate> untuk secara otomatis mengalihkan pengguna 
-              dari halaman root ke halaman dasbor. */}
-          <Route path="/" element={<Navigate to="/dashboard" />} />
 
-          {/* Rute untuk halaman dasbor utama aplikasi */}
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* === RUTE PUBLIK === */}
+          {/* Rute-rute ini dapat diakses oleh siapa saja, baik yang sudah login maupun yang belum. */}
 
-          {/* Rute untuk halaman login */}
           <Route path="/login" element={<Login />} />
-
-          {/* Rute untuk halaman registrasi */}
           <Route path="/register" element={<Register />} />
-
-          {/* Rute baru untuk halaman Lupa Password */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
-
-          {/* Rute baru untuk halaman Update Password (diakses dari link email) */}
           <Route path="/update-password" element={<UpdatePassword />} />
+
+
+          {/* === RUTE TERPROTEKSI === */}
+          {/* Rute di dalam wrapper ini hanya bisa diakses jika pengguna sudah login. */}
+          {/* Komponen `ProtectedRoute` akan memeriksa status otentikasi terlebih dahulu. */}
+          <Route element={<ProtectedRoute />}>
+            {/* Jika pengguna sudah login, <Outlet /> di dalam ProtectedRoute akan merender rute ini. */}
+            {/* Jika tidak, pengguna akan otomatis dialihkan ke halaman "/login" oleh ProtectedRoute. */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            
+            {/* Anda bisa menambahkan rute terproteksi lainnya di sini di masa depan */}
+            {/* Contoh: <Route path="/profil" element={<HalamanProfil />} /> */}
+          </Route>
           
+
+          {/* === RUTE UTAMA & FALLBACK === */}
+
+          {/* Rute untuk halaman utama ('/'). */}
+          {/* Ini akan selalu mengarahkan ke /dashboard. Karena /dashboard sekarang dilindungi, */}
+          {/* logika pengalihan ke /login akan ditangani secara otomatis oleh ProtectedRoute. */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+          {/* Rute fallback jika tidak ada rute lain yang cocok (Halaman 404) */}
+          <Route path="*" element={
+            <div style={{ padding: '50px', textAlign: 'center' }}>
+              <h1>404 - Halaman Tidak Ditemukan</h1>
+              <p>Maaf, halaman yang Anda cari tidak ada.</p>
+            </div>
+          } />
+
         </Routes>
       </BrowserRouter>
     </>
